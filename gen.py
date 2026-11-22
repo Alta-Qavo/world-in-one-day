@@ -124,11 +124,11 @@ AU = [(115, -20), (125, -15), (135, -12), (142, -10), (150, -20),
 CONTINENTS = [NA, SA, AF, EU, AS, AU]
 
 PINS = [(50.5, 26.2, 0, 0), (-108.5, 25.6, 0, 0), (30.7, 36.9, 0, 12),
-        (135.5, 34.7, 0, 0), (6.0, 4.8, 0, 0), (-75.0, -11.2, 0, 0),
-        (47.8, 30.5, 14, -10), (24.5, 59.8, 0, 0), (-43.9, -19.9, 0, 0),
+        (33.4, 47.9, 12, -2), (-74.0, 40.7, 0, 0), (94.0, 24.5, 0, 0),
+        (6.0, 4.8, 0, 0), (24.5, 59.8, 0, 0), (-43.9, -19.9, 0, 0),
         (127.4, -7.7, 0, 0), (4.35, 50.85, -16, -2), (6.14, 46.2, 2, 14)]
 PIN_NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13]
-PIN_COLORS = [RED, GREEN, BLUE, TEAL, ORANGE, GREEN, RED, BLUE, GREEN,
+PIN_COLORS = [RED, GREEN, BLUE, BLUE, GREEN, PURPLE, ORANGE, BLUE, GREEN,
               OCHRE, BLUE, BLUE]
 
 
@@ -409,22 +409,22 @@ LEADS = [
 ]
 
 MEDIUM = [
-    dict(n=4, region="EAST ASIA", color=TEAL, status="CONFIRMED",
-         head="BTS take five MAMA awards",
-         body="Five wins at the ceremony in Osaka.",
-         src="YONHAP", ill="trophy"),
-    dict(n=5, region="AFRICA", color=ORANGE, status="CONFIRMED",
+    dict(n=4, region="EUROPE", color=BLUE, status="CONFIRMED",
+         head="Russian missile hits Zelensky\u2019s hometown",
+         body="2 killed, incl. a boy, 7; about 60 hurt.",
+         src="AP \u00b7 BBC", ill="blast"),
+    dict(n=5, region="AMERICAS", color=GREEN, status="CONFIRMED",
+         head="AI sell-off drags US stocks into correction",
+         body="S&P \u22123.7% Fri; Nasdaq down 5.3%.",
+         src="BLOOMBERG \u00b7 REUTERS", ill="chart"),
+    dict(n=6, region="SOUTH ASIA", color=PURPLE, status="CONFIRMED",
+         head="Tainted alcohol kills 11 in Manipur",
+         body="180+ in hospital; chief minister says.",
+         src="REUTERS", ill="bottle"),
+    dict(n=7, region="AFRICA", color=ORANGE, status="CONFIRMED",
          head="Nigeria funeral boat toll reaches 24",
          body="Capsized in Bayelsa; toll given Sat.",
          src="AP", ill="boat"),
-    dict(n=6, region="AMERICAS", color=GREEN, status="OFFICIAL",
-         head="Deep 6.7 quake shakes Peru",
-         body="108 km deep in Jun\u00edn; 00:09 UTC.",
-         src="USGS", ill="quake2"),
-    dict(n=7, region="MIDDLE EAST", color=RED, status="CONFIRMED",
-         head="Power-plant fire kills 4 in Basra",
-         body="35 injured; blaze at the station.",
-         src="REUTERS", ill="fire"),
     dict(n=8, region="EUROPE", color=BLUE, status="CONFIRMED",
          head="Drones set Russian cargo ship ablaze",
          body="Drifts into Finnish waters; crew safe.",
@@ -463,6 +463,7 @@ BRIEFS = [
     ("Washington", "Trump threatens data-centre tax", "BBC", "AMERICAS"),
     ("Washington", "FBI crime database reportedly hacked", "BBC", "AMERICAS"),
     ("Bras\u00edlia", "Bolsonaro in intensive care", "AL JAZEERA", "AMERICAS"),
+    ("Basra", "Fire at power station kills 4, injures 35", "REUTERS", "MIDDLE EAST"),
     ("Dar es Salaam", "Tanzania convicts Lissu", "BBC", "AFRICA"),
     ("Kampala", "Uganda curbs gatherings over Ebola", "GUARDIAN", "AFRICA"),
     ("Haiti", "Salvadoran troops fight gangs", "GUARDIAN", "AMERICAS"),
@@ -481,9 +482,12 @@ BRIEFS = [
     ("Cardiff", "Australia beat Wales 29\u201326", "BBC", "EUROPE"),
     ("Dublin", "Ireland beat South Africa 20\u201317", "REUTERS", "EUROPE"),
     ("Kyiv", "UK to build Ukraine drones in Britain", "UK MOD", "EUROPE"),
+    ("Osaka", "BTS take five MAMA awards", "YONHAP", "EAST ASIA"),
     ("Dhaka", "Measles toll reaches 1,343", "TBS", "SOUTH ASIA"),
     ("Patna", "Modi opens Nitish Setu Ganga bridge", "ANI", "SOUTH ASIA"),
     ("Melbourne", "Australia win T20 opener v England", "REUTERS", "OCEANIA"),
+    ("Jun\u00edn", "M6.7 quake, 108 km deep", "USGS", "AMERICAS"),
+    ("Fukushima", "Snow isolates 1,400 in village", "KYODO", "EAST ASIA"),
 ]
 
 ILL = {"gulf": ill_gulf, "mexico": ill_mexico, "cop31": ill_cop31,
@@ -513,7 +517,7 @@ def draw():
     d.text((906, 58), "21 NOV", font=F(SANS_B, 15), fill=(255, 255, 255))
     rule(d, x0, 98, x1 - x0, width=1)
     # ---- subline (measured, centred, no overlap)
-    p1 = "41 STORIES \u00b7 9 REGIONS \u00b7 14 FIELDS \u2014 EVERY ONE DATED "
+    p1 = "45 STORIES \u00b7 9 REGIONS \u00b7 14 FIELDS \u2014 EVERY ONE DATED "
     p2 = "SATURDAY 21 NOVEMBER 2026"
     fsub = F(SANS_B, 12)
     tw = d.textlength(p1, font=fsub) + d.textlength(p2, font=fsub)
@@ -539,7 +543,7 @@ def draw():
     nums = [("2", "US Patriot radars Iran claims it hit"),
             ("11", "dead in the Sinaloa raid"),
             ("$5m", "FBI reward on \u2018El Chapo Isidro\u2019"),
-            ("1,343", "measles deaths in Bangladesh"),
+            ("$1.7tn", "China AI shares lost since June"),
             ("68.6%", "fewer dengue infections in trial"),
             ("24", "dead in the Nigeria boat capsize")]
     nx, nw = x0, 163
@@ -549,8 +553,8 @@ def draw():
         d.text((bx + 6, 175), big, font=F(SERIF_B, 18), fill=RED)
         para(d, bx + 6, 196, lab, F(SANS, 9), nw - 12, leading=10, max_lines=2)
     # ---- region tabs
-    tabs = [("EUROPE", 12, BLUE), ("MIDDLE EAST", 6, RED), ("AMERICAS", 10, GREEN),
-            ("AFRICA", 4, ORANGE), ("SOUTH ASIA", 2, PURPLE), ("EAST ASIA", 2, TEAL),
+    tabs = [("EUROPE", 13, BLUE), ("MIDDLE EAST", 6, RED), ("AMERICAS", 11, GREEN),
+            ("AFRICA", 4, ORANGE), ("SOUTH ASIA", 3, PURPLE), ("EAST ASIA", 3, TEAL),
             ("SOUTH-EAST ASIA", 1, OCHRE), ("OCEANIA", 2, PINK), ("GLOBAL", 2, GREY)]
     tx = x0
     d.text((tx, 221), "STORIES BY REGION", font=F(SANS_B, 10), fill=INK)
@@ -595,24 +599,24 @@ def draw():
     d.text((x0, by + 15), "pins are the drawn stories; pin colour is the region",
            font=F(SANS, 9), fill=GREY)
     world_map(d, x0, by + 30, 330, 150)
-    d.text((x0, by + 186), "1 Bahrain  2 Mexico  3 Antalya  4 Osaka  5 Bayelsa  6 Jun\u00edn",
+    d.text((x0, by + 186), "1 Bahrain  2 Mexico  3 Antalya  4 Kryvyi Rih  5 New York  6 Manipur",
            font=F(SANS, 9), fill=INK)
-    d.text((x0, by + 197), "7 Basra  8 Gulf of Finland  9 Belo Horizonte  10 Banda Sea",
+    d.text((x0, by + 197), "7 Bayelsa  8 Gulf of Finland  9 Belo Horizonte  10 Banda Sea",
            font=F(SANS, 9), fill=INK)
     d.text((x0, by + 208), "11 BepiColombo: in orbit, no pin  \u00b7  12 Brussels  13 Geneva",
            font=F(SANS, 9), fill=INK)
     d.text((x0, by + 219), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
            font=F(SANS, 8), fill=GREY)
     bx = 354
-    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 28 MORE STORIES",
+    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 32 MORE STORIES",
            font=F(SANS_B, 12), fill=INK)
     d.text((bx, by + 15), "in order of consequence", font=F(SANS, 9), fill=GREY)
     colw = 326
     for i, (place, head, src, region) in enumerate(BRIEFS):
-        c = i // 14
-        r = i % 14
+        c = i // 16
+        r = i % 16
         x = bx + c * (colw + 10)
-        y = by + 30 + r * 16
+        y = by + 30 + r * 14
         col = REGION_COLORS[region]
         d.ellipse([x, y + 1, x + 15, y + 16], fill=col)
         num = str(14 + i)
@@ -626,9 +630,8 @@ def draw():
     d.rectangle([x0, 974, x1, 1002], outline=RED, width=1)
     d.text((x0 + 6, 978), "DATE CHECK", font=F(SANS_B, 10), fill=RED)
     para(d, x0 + 84, 978,
-         "Left out \u2014 they belong to another day: Fri 20 Nov: AI sell-off (S&P \u22123.7%) \u00b7 "
-         "Kryvyi Rih strike \u00b7 Virginia measles \u00b7 Denmark attach\u00e9 \u00b7 "
-         "GTA VI sales \u00b7 Manipur toll first reported.  Thu 19 Nov: ICJ finds Myanmar committed genocide \u00b7 "
+         "Left out \u2014 they belong to another day: Fri 20 Nov: Virginia measles \u00b7 "
+         "Denmark attach\u00e9 \u00b7 GTA VI sales.  Thu 19 Nov: ICJ finds Myanmar committed genocide \u00b7 "
          "Trump, Xi and Putin meet in Shenzhen.  Not yet: COP31\u2019s closing session (Sun 22 Nov).",
          F(SANS, 10), x1 - x0 - 96, leading=12, max_lines=2)
     d.text((x0, 1008),
