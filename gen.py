@@ -19,6 +19,8 @@ TEAL = (13, 110, 110)
 GREEN = (28, 110, 44)
 ORANGE = (190, 90, 10)
 PURPLE = (110, 60, 150)
+OCHRE = (176, 138, 18)
+PINK = (208, 88, 148)
 GREY = (90, 90, 88)
 LIGHT = (232, 226, 210)
 SEA = (196, 216, 228)
@@ -122,9 +124,12 @@ AU = [(115, -20), (125, -15), (135, -12), (142, -10), (150, -20),
 CONTINENTS = [NA, SA, AF, EU, AS, AU]
 
 PINS = [(50.5, 26.2, 0, 0), (-108.5, 25.6, 0, 0), (30.7, 36.9, 0, 12),
-        (33.4, 47.9, 12, -2), (-74.0, 40.7, 0, 0), (24.5, 59.8, 0, 0),
-        (-43.9, -19.9, 0, 0), (127.4, -7.7, 0, 0), (4.35, 50.85, -16, -2),
-        (6.14, 46.2, 2, 14)]
+        (135.5, 34.7, 0, 0), (6.0, 4.8, 0, 0), (-75.0, -11.2, 0, 0),
+        (47.8, 30.5, 14, -10), (24.5, 59.8, 0, 0), (-43.9, -19.9, 0, 0),
+        (127.4, -7.7, 0, 0), (4.35, 50.85, -16, -2), (6.14, 46.2, 2, 14)]
+PIN_NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13]
+PIN_COLORS = [RED, GREEN, BLUE, TEAL, ORANGE, GREEN, RED, BLUE, GREEN,
+              OCHRE, BLUE, BLUE]
 
 
 def world_map(d, x, y, w, h, pins=True):
@@ -135,14 +140,14 @@ def world_map(d, x, y, w, h, pins=True):
     d.text((x + 6, y + 4), "ATLANTIC", font=F(SANS, 8), fill=(90, 120, 140))
     d.text((x + w - 52, y + h - 14), "PACIFIC", font=F(SANS, 8), fill=(90, 120, 140))
     if pins:
-        for i, (lon, lat, dx, dy) in enumerate(PINS, 1):
+        for (lon, lat, dx, dy), num, col in zip(PINS, PIN_NUMS, PIN_COLORS):
             ox, oy = project(x, y, w, h, lon, lat)
             px, py = ox + dx, oy + dy
             if (dx, dy) != (0, 0):
-                d.line([(ox, oy), (px, py)], fill=RED, width=1)
-            d.ellipse([px - 7, py - 7, px + 7, py + 7], fill=RED,
+                d.line([(ox, oy), (px, py)], fill=col, width=1)
+            d.ellipse([px - 7, py - 7, px + 7, py + 7], fill=col,
                       outline=(255, 255, 255), width=1)
-            d.text((px - 3, py - 6), str(i), font=F(SANS_B, 8), fill=(255, 255, 255))
+            d.text((px - 3, py - 6), str(num), font=F(SANS_B, 8), fill=(255, 255, 255))
 
 
 # ---------------------------------------------------------------- illustrations
@@ -277,7 +282,72 @@ def ill_quake(d, x, y, w, h):
         py = y + 26 + (9 if i % 4 == 1 else (-9 if i % 4 == 3 else 0))
         pts.append((px, py))
     d.line(pts, fill=RED, width=2)
-    d.text((x + 8, y + 2), "M6.8 BANDA SEA \u00b7 M6.7 PERU", font=F(SANS_B, 9), fill=INK)
+    d.text((x + 8, y + 2), "M6.8 BANDA SEA", font=F(SANS_B, 9), fill=INK)
+
+
+def ill_quake2(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=(255, 255, 255), outline=INK, width=1)
+    pts = [(x + 6, y + 26)]
+    for i in range(1, 20):
+        px = x + 6 + i * 10
+        py = y + 26 + (9 if i % 4 == 1 else (-9 if i % 4 == 3 else 0))
+        pts.append((px, py))
+    d.line(pts, fill=RED, width=2)
+    d.text((x + 8, y + 2), "M6.7 JUN\u00cdN \u00b7 PERU", font=F(SANS_B, 9), fill=INK)
+
+
+def ill_fire(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=(255, 255, 255), outline=INK, width=1)
+    d.rectangle([x + 20, y + 12, x + 120, y + 30], fill=(150, 150, 150),
+                outline=INK, width=1)
+    d.rectangle([x + 128, y + 2, x + 138, y + 30], fill=(150, 150, 150),
+                outline=INK, width=1)
+    d.polygon([(x + 62, y + 12), (x + 70, y + 2), (x + 78, y + 12)],
+              fill=(255, 140, 0))
+    d.polygon([(x + 68, y + 12), (x + 72, y + 6), (x + 76, y + 12)],
+              fill=(255, 220, 0))
+    d.rectangle([x + 140, y + 4, x + 186, y + 24], fill=RED)
+    d.text((x + 144, y + 7), "4 DEAD", font=F(SANS_B, 11), fill=(255, 255, 255))
+    d.text((x + 8, y + h - 10), "BASRA POWER STATION", font=F(SANS_B, 8), fill=INK)
+
+
+def ill_bottle(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=(255, 255, 255), outline=INK, width=1)
+    d.polygon([(x + 82, y + 4), (x + 92, y + 4), (x + 92, y + 12),
+               (x + 100, y + 16), (x + 100, y + 42), (x + 74, y + 42),
+               (x + 74, y + 16), (x + 82, y + 12)], fill=(60, 110, 60),
+              outline=INK)
+    d.polygon([(x + 148, y + 4), (x + 166, y + 32), (x + 130, y + 32)],
+              fill=(255, 200, 0), outline=INK)
+    d.text((x + 146, y + 16), "!", font=F(SANS_B, 14), fill=INK)
+    d.rectangle([x + 8, y + 4, x + 62, y + 24], fill=RED)
+    d.text((x + 11, y + 7), "11 DEAD", font=F(SANS_B, 11), fill=(255, 255, 255))
+    d.text((x + 8, y + h - 12), "MANIPUR \u00b7 CHANDEL", font=F(SANS_B, 8), fill=INK)
+
+
+def ill_boat(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=SEA, outline=INK, width=1)
+    d.polygon([(x + 40, y + 18), (x + 140, y + 18), (x + 125, y + 32),
+               (x + 55, y + 32)], fill=(40, 40, 40))
+    d.rectangle([x + 70, y + 8, x + 110, y + 18], fill=(120, 60, 30))
+    d.line([(x + 10, y + 36), (x + 60, y + 36), (x + 110, y + 36),
+            (x + 160, y + 36)], fill=(60, 90, 110), width=2)
+    d.rectangle([x + 8, y + 4, x + 62, y + 24], fill=RED)
+    d.text((x + 11, y + 7), "24 DEAD", font=F(SANS_B, 11), fill=(255, 255, 255))
+    d.text((x + 148, y + 6), "BAYELSA", font=F(SANS_B, 8), fill=INK)
+
+
+def ill_trophy(d, x, y, w, h):
+    d.rectangle([x, y, x + w, y + h], fill=(255, 255, 255), outline=INK, width=1)
+    gold = (220, 170, 40)
+    d.polygon([(x + 18, y + 4), (x + 58, y + 4), (x + 52, y + 22),
+               (x + 24, y + 22)], fill=gold, outline=INK)
+    d.rectangle([x + 12, y + 8, x + 18, y + 16], fill=gold, outline=INK)
+    d.rectangle([x + 58, y + 8, x + 64, y + 16], fill=gold, outline=INK)
+    d.rectangle([x + 34, y + 22, x + 42, y + 30], fill=gold, outline=INK)
+    d.rectangle([x + 26, y + 30, x + 50, y + 36], fill=gold, outline=INK)
+    d.text((x + 100, y + 10), "5 AWARDS", font=F(SANS_B, 15), fill=INK)
+    d.text((x + 70, y + 30), "MAMA \u00b7 OSAKA", font=F(SANS_B, 8), fill=INK)
 
 
 def ill_mercury(d, x, y, w, h):
@@ -303,7 +373,7 @@ def ill_trade(d, x, y, w, h):
     d.rectangle([x + 80, y + 4, x + 130, y + 20], fill=RED)
     d.rectangle([x + 80, y + 4, x + 130, y + 12], fill=(255, 255, 255))
     d.text((x + 140, y + 6), "98.5%", font=F(SANS_B, 15), fill=INK)
-    d.text((x + 8, y + h - 11), "EU\u2013INDONESIA PACT", font=F(SANS_B, 8), fill=INK)
+    d.text((x + 82, y + h - 12), "EU\u2013INDONESIA PACT", font=F(SANS_B, 8), fill=INK)
 
 
 def ill_robot(d, x, y, w, h):
@@ -339,77 +409,89 @@ LEADS = [
 ]
 
 MEDIUM = [
-    dict(n=4, region="EUROPE", color=BLUE, status="CONFIRMED",
-         head="Russian missile hits Zelensky\u2019s hometown",
-         body="2 killed, incl. a boy, 7; about 60 hurt.",
-         src="AP \u00b7 BBC", ill="blast"),
-    dict(n=5, region="NORTH AMERICA", color=GREEN, status="CONFIRMED",
-         head="AI sell-off drags US stocks into correction",
-         body="S&P \u22123.7% Fri; Nasdaq erases 2026 gains.",
-         src="BLOOMBERG \u00b7 REUTERS", ill="chart"),
-    dict(n=6, region="EUROPE", color=BLUE, status="CONFIRMED",
+    dict(n=4, region="EAST ASIA", color=TEAL, status="CONFIRMED",
+         head="BTS take five MAMA awards",
+         body="Five wins at the ceremony in Osaka.",
+         src="YONHAP", ill="trophy"),
+    dict(n=5, region="AFRICA", color=ORANGE, status="CONFIRMED",
+         head="Nigeria funeral boat toll reaches 24",
+         body="Capsized in Bayelsa; toll given Sat.",
+         src="AP", ill="boat"),
+    dict(n=6, region="AMERICAS", color=GREEN, status="OFFICIAL",
+         head="Deep 6.7 quake shakes Peru",
+         body="108 km deep in Jun\u00edn; 00:09 UTC.",
+         src="USGS", ill="quake2"),
+    dict(n=7, region="MIDDLE EAST", color=RED, status="CONFIRMED",
+         head="Power-plant fire kills 4 in Basra",
+         body="35 injured; blaze at the station.",
+         src="REUTERS", ill="fire"),
+    dict(n=8, region="EUROPE", color=BLUE, status="CONFIRMED",
          head="Drones set Russian cargo ship ablaze",
          body="Drifts into Finnish waters; crew safe.",
          src="BBC \u00b7 UPI", ill="ship"),
-    dict(n=7, region="LATIN AMERICA", color=TEAL, status="REPORTED",
+    dict(n=9, region="AMERICAS", color=GREEN, status="REPORTED",
          head="Trial: mosquitoes cut dengue 69%",
          body="5,757 children in Belo Horizonte trial.",
          src="AP \u00b7 STRAITS TIMES", ill="mosquito"),
-    dict(n=8, region="ASIA", color=PURPLE, status="OFFICIAL",
-         head="Deep quakes shake Peru and Timor",
-         body="Deep, no tsunami threat; felt in Darwin.",
+    dict(n=10, region="SOUTH-EAST ASIA", color=OCHRE, status="OFFICIAL",
+         head="M6.8 quake shakes Timor",
+         body="Deep; felt in Darwin, no tsunami.",
          src="USGS \u00b7 GFZ", ill="quake"),
-    dict(n=9, region="GLOBAL", color=GREY, status="OFFICIAL",
+    dict(n=11, region="GLOBAL", color=GREY, status="OFFICIAL",
          head="BepiColombo enters Mercury orbit",
-         body="8 years, 10bn km; 2nd mission to orbit it.",
+         body="8 years, 10bn km; 2nd to orbit it.",
          src="ESA \u00b7 JAXA", ill="mercury"),
-    dict(n=10, region="EUROPE", color=BLUE, status="OFFICIAL",
+    dict(n=12, region="EUROPE", color=BLUE, status="OFFICIAL",
          head="EU and Indonesia sign trade pact",
-         body="98.5% of EU tariffs gone; 730m people.",
+         body="98.5% tariffs gone; 730m people.",
          src="DW \u00b7 EURONEWS", ill="trade"),
-    dict(n=11, region="EUROPE", color=BLUE, status="CONFIRMED",
+    dict(n=13, region="EUROPE", color=BLUE, status="CONFIRMED",
          head="UN \u2018killer robot\u2019 talks end, no treaty",
-         body="~100 states back rules by 2028; US opposed.",
+         body="~100 states back rules; US opposed.",
          src="CBC \u00b7 NPR", ill="robot"),
 ]
 
+REGION_COLORS = {"EUROPE": BLUE, "MIDDLE EAST": RED, "AMERICAS": GREEN,
+                 "AFRICA": ORANGE, "SOUTH ASIA": PURPLE, "EAST ASIA": TEAL,
+                 "SOUTH-EAST ASIA": OCHRE, "OCEANIA": PINK, "GLOBAL": GREY}
+
 BRIEFS = [
-    ("Gaza", "Israeli strike kills 3 in food vehicle", "REUTERS"),
-    ("Riyadh", "3 Houthi missiles downed", "AL JAZEERA"),
-    ("Paris", "6th Saturday of cost-of-living marches", "FRANCE 24"),
-    ("Copenhagen", "Denmark expels Russian attach\u00e9", "BBC"),
-    ("Brussels", "UK-EU sign three post-Brexit deals", "GUARDIAN"),
-    ("Washington", "Trump threatens data-centre tax", "BBC"),
-    ("Washington", "FBI crime database reportedly hacked", "BBC"),
-    ("Virginia", "First US measles death of 2026", "GUARDIAN"),
-    ("Bras\u00edlia", "Bolsonaro in intensive care", "AL JAZEERA"),
-    ("Bayelsa", "Funeral boat capsizes; 24 dead", "SKY NEWS"),
-    ("Basra", "Fire at power station kills 4, injures 35", "REUTERS"),
-    ("Dar es Salaam", "Tanzania convicts Lissu", "BBC"),
-    ("Kampala", "Uganda curbs gatherings over Ebola", "GUARDIAN"),
-    ("Haiti", "Salvadoran troops fight gangs", "GUARDIAN"),
-    ("Tokyo", "Saudi-Japan oil stockpile deal", "JAPAN TODAY"),
-    ("Buenos Aires", "Bonds in distress", "BUENOS AIRES TIMES"),
-    ("New York", "GTA VI earns $3.8bn on its first day", "BBC"),
-    ("London", "England beat All Blacks 37\u201312 at Twickenham", "BBC"),
-    ("Osaka", "BTS take five MAMA awards", "YONHAP"),
-    ("Melbourne", "North Melbourne reach 4th AFLW final", "ABC"),
-    ("Washington", "Nvidia chief ousted after scandal", "CNBC"),
-    ("London", "Princess Kate says she is in remission", "CBS"),
-    ("Space", "Voyager 1 now 24 light-hours from Earth", "NASA"),
-    ("Hormuz", "Lewis Pugh completes 15km swim", "EURONEWS"),
-    ("Brussels", "EU proposes smaller budget, Big Tech tax", "RFI"),
-    ("Doha", "Gulf economies hit by Iran war", "LA NACI\u00d3N"),
-    ("Antarctica", "Ancient ranges found under ice", "EURONEWS"),
-    ("Ethiopia", "700,000 displaced in the south", "FRANCE 24"),
-    ("New York", "Mamdani plans to close Rikers by 2032", "BBC"),
-    ("Cardiff", "Australia beat Wales 29\u201326", "BBC"),
+    ("Gaza", "Israeli strike kills 3 in food vehicle", "REUTERS", "MIDDLE EAST"),
+    ("Riyadh", "3 Houthi missiles downed", "AL JAZEERA", "MIDDLE EAST"),
+    ("Paris", "6th Saturday of cost-of-living marches", "FRANCE 24", "EUROPE"),
+    ("Brussels", "UK-EU sign three post-Brexit deals", "GUARDIAN", "EUROPE"),
+    ("Washington", "Trump threatens data-centre tax", "BBC", "AMERICAS"),
+    ("Washington", "FBI crime database reportedly hacked", "BBC", "AMERICAS"),
+    ("Bras\u00edlia", "Bolsonaro in intensive care", "AL JAZEERA", "AMERICAS"),
+    ("Dar es Salaam", "Tanzania convicts Lissu", "BBC", "AFRICA"),
+    ("Kampala", "Uganda curbs gatherings over Ebola", "GUARDIAN", "AFRICA"),
+    ("Haiti", "Salvadoran troops fight gangs", "GUARDIAN", "AMERICAS"),
+    ("Tokyo", "Saudi-Japan oil stockpile deal", "JAPAN TODAY", "EAST ASIA"),
+    ("Buenos Aires", "Bonds in distress", "BUENOS AIRES TIMES", "AMERICAS"),
+    ("London", "England beat All Blacks 37\u201312 at Twickenham", "BBC", "EUROPE"),
+    ("Melbourne", "North Melbourne reach 4th AFLW final", "ABC", "OCEANIA"),
+    ("Washington", "Nvidia chief ousted after scandal", "CNBC", "AMERICAS"),
+    ("London", "Princess Kate says she is in remission", "CBS", "EUROPE"),
+    ("Space", "Voyager 1 now 24 light-hours from Earth", "NASA", "GLOBAL"),
+    ("Hormuz", "Lewis Pugh completes 15km swim", "EURONEWS", "MIDDLE EAST"),
+    ("Brussels", "EU proposes smaller budget, Big Tech tax", "RFI", "EUROPE"),
+    ("Doha", "Gulf economies hit by Iran war", "LA NACI\u00d3N", "MIDDLE EAST"),
+    ("Ethiopia", "700,000 displaced in the south", "FRANCE 24", "AFRICA"),
+    ("New York", "Mamdani plans to close Rikers by 2032", "BBC", "AMERICAS"),
+    ("Cardiff", "Australia beat Wales 29\u201326", "BBC", "EUROPE"),
+    ("Dublin", "Ireland beat South Africa 20\u201317", "REUTERS", "EUROPE"),
+    ("Kyiv", "UK to build Ukraine drones in Britain", "UK MOD", "EUROPE"),
+    ("Dhaka", "Measles toll reaches 1,343", "TBS", "SOUTH ASIA"),
+    ("Patna", "Modi opens Nitish Setu Ganga bridge", "ANI", "SOUTH ASIA"),
+    ("Melbourne", "Australia win T20 opener v England", "REUTERS", "OCEANIA"),
 ]
 
 ILL = {"gulf": ill_gulf, "mexico": ill_mexico, "cop31": ill_cop31,
        "blast": ill_blast, "chart": ill_chart, "ship": ill_ship,
-       "mosquito": ill_mosquito, "quake": ill_quake, "mercury": ill_mercury,
-       "trade": ill_trade, "robot": ill_robot}
+       "mosquito": ill_mosquito, "quake": ill_quake, "quake2": ill_quake2,
+       "fire": ill_fire, "bottle": ill_bottle, "boat": ill_boat,
+       "trophy": ill_trophy,
+       "mercury": ill_mercury, "trade": ill_trade, "robot": ill_robot}
 
 
 def draw():
@@ -419,8 +501,9 @@ def draw():
     # ---- top bar
     d.text((x0, 8), "THE WORLD IN ONE DAY", font=F(SANS_B, 11), fill=INK)
     d.text((x0 + 400, 8), "DAY 325 OF 2026", font=F(SANS_B, 11), fill=RED)
-    d.text((x1 - 258, 8), "ALL TIMES UTC \u00b7 ONE DAY IN FULL",
-           font=F(SANS_B, 11), fill=INK)
+    ftb = fit(SANS_B, "ALL TIMES UTC \u00b7 RANKED BY CONSEQUENCE", 282, 11)
+    d.text((x1 - 282, 8), "ALL TIMES UTC \u00b7 RANKED BY CONSEQUENCE",
+           font=ftb, fill=INK)
     rule(d, x0, 28, x1 - x0, width=2)
     # ---- masthead
     font = fit(SERIF_B, "Saturday 21 November 2026", 864, 66)
@@ -455,20 +538,20 @@ def draw():
     # ---- numbers strip
     nums = [("2", "US Patriot radars Iran claims it hit"),
             ("11", "dead in the Sinaloa raid"),
-            ("\u22125.3%", "Nasdaq on Friday"),
-            ("$1.7tn", "China AI shares lost since June"),
-            ("68.6%", "fewer dengue infections in trial")]
-    nx, nw = x0, 198
+            ("$5m", "FBI reward on \u2018El Chapo Isidro\u2019"),
+            ("1,343", "measles deaths in Bangladesh"),
+            ("68.6%", "fewer dengue infections in trial"),
+            ("24", "dead in the Nigeria boat capsize")]
+    nx, nw = x0, 163
     for i, (big, lab) in enumerate(nums):
         bx = nx + i * (nw + 5)
         d.rectangle([bx, 172, bx + nw, 216], outline=INK, width=1)
         d.text((bx + 6, 175), big, font=F(SERIF_B, 18), fill=RED)
         para(d, bx + 6, 196, lab, F(SANS, 9), nw - 12, leading=10, max_lines=2)
     # ---- region tabs
-    tabs = [("NORTH AMERICA", 9, GREEN), ("LATIN AMERICA", 3, TEAL),
-            ("EUROPE", 11, BLUE), ("MIDDLE EAST", 6, RED), ("AFRICA", 4, ORANGE),
-            ("ASIA", 3, PURPLE), ("OCEANIA", 1, TEAL), ("ANTARCTICA", 1, GREY),
-            ("GLOBAL", 3, GREY)]
+    tabs = [("EUROPE", 12, BLUE), ("MIDDLE EAST", 6, RED), ("AMERICAS", 10, GREEN),
+            ("AFRICA", 4, ORANGE), ("SOUTH ASIA", 2, PURPLE), ("EAST ASIA", 2, TEAL),
+            ("SOUTH-EAST ASIA", 1, OCHRE), ("OCEANIA", 2, PINK), ("GLOBAL", 2, GREY)]
     tx = x0
     d.text((tx, 221), "STORIES BY REGION", font=F(SANS_B, 10), fill=INK)
     tx += 132
@@ -491,9 +574,9 @@ def draw():
         d.text((bx, ly + lh - 11), s["src"], font=F(SANS, 8), fill=GREY)
     rule(d, x0, 440, x1 - x0, width=2)
     # ---- medium grid
-    gy, gh, gw = 448, 118, 246
+    gy, gh, gw = 448, 118, 195
     for i, s in enumerate(MEDIUM):
-        col, row = i % 4, i // 4
+        col, row = i % 5, i // 5
         bx = x0 + col * (gw + 8)
         by = gy + row * (gh + 8)
         ILL[s["ill"]](d, bx, by, gw, 42)
@@ -502,33 +585,40 @@ def draw():
                fill=s["color"])
         d.text((bx + gw - 52, y), s["status"], font=F(SANS_B, 8), fill=s["color"])
         y += 13
-        y = para(d, bx, y, s["head"], F(SERIF_B, 13), gw, leading=13, max_lines=2)
+        y = para(d, bx, y, s["head"], F(SERIF_B, 12), gw, leading=13, max_lines=2)
         y = para(d, bx, y + 2, s["body"], F(SANS, 10), gw, leading=11, max_lines=1)
         d.text((bx, by + gh - 10), s["src"], font=F(SANS, 8), fill=GREY)
     rule(d, x0, 696, x1 - x0, width=2)
     # ---- bottom: map + briefs
     by = 704
     d.text((x0, by), "WHERE IT HAPPENED", font=F(SANS_B, 12), fill=INK)
-    d.text((x0, by + 15), "pins 1\u201310 are the drawn stories",
+    d.text((x0, by + 15), "pins are the drawn stories; pin colour is the region",
            font=F(SANS, 9), fill=GREY)
     world_map(d, x0, by + 30, 330, 150)
-    d.text((x0, by + 186), "1 Bahrain  2 Mexico  3 Antalya  4 Kryvyi Rih  5 New York",
+    d.text((x0, by + 186), "1 Bahrain  2 Mexico  3 Antalya  4 Osaka  5 Bayelsa  6 Jun\u00edn",
            font=F(SANS, 9), fill=INK)
-    d.text((x0, by + 197), "6 Gulf of Finland  7 Belo Horizonte  8 Banda Sea  9 Brussels  10 Geneva",
+    d.text((x0, by + 197), "7 Basra  8 Gulf of Finland  9 Belo Horizonte  10 Banda Sea",
            font=F(SANS, 9), fill=INK)
-    d.text((x0, by + 208), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
+    d.text((x0, by + 208), "11 BepiColombo: in orbit, no pin  \u00b7  12 Brussels  13 Geneva",
+           font=F(SANS, 9), fill=INK)
+    d.text((x0, by + 219), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
            font=F(SANS, 8), fill=GREY)
     bx = 354
-    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 30 MORE STORIES",
+    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 28 MORE STORIES",
            font=F(SANS_B, 12), fill=INK)
     d.text((bx, by + 15), "in order of consequence", font=F(SANS, 9), fill=GREY)
     colw = 326
-    for i, (place, head, src) in enumerate(BRIEFS):
-        c = i // 15
-        r = i % 15
+    for i, (place, head, src, region) in enumerate(BRIEFS):
+        c = i // 14
+        r = i % 14
         x = bx + c * (colw + 10)
-        y = by + 30 + r * 15
-        d.text((x, y), "%d" % (12 + i), font=F(SANS_B, 11), fill=RED)
+        y = by + 30 + r * 16
+        col = REGION_COLORS[region]
+        d.ellipse([x, y + 1, x + 15, y + 16], fill=col)
+        num = str(14 + i)
+        nw2 = d.textlength(num, font=F(SANS_B, 8))
+        d.text((x + (15 - nw2) / 2, y + 3), num, font=F(SANS_B, 8),
+               fill=(255, 255, 255))
         para(d, x + 22, y, "%s: %s  (%s)" % (place, head, src),
              F(SANS, 10), colw - 22, leading=11, max_lines=2)
     rule(d, x0, 968, x1 - x0, width=2)
@@ -536,9 +626,10 @@ def draw():
     d.rectangle([x0, 974, x1, 1002], outline=RED, width=1)
     d.text((x0 + 6, 978), "DATE CHECK", font=F(SANS_B, 10), fill=RED)
     para(d, x0 + 84, 978,
-         "Left out \u2014 they belong to another day: Fri 20 Nov: Russian missiles land in Poland.  "
-         "Thu 19 Nov: ICJ finds Myanmar committed genocide \u00b7 Trump, Xi and Putin meet in Shenzhen.  "
-         "Not yet: COP31\u2019s closing session (Sun 22 Nov).",
+         "Left out \u2014 they belong to another day: Fri 20 Nov: AI sell-off (S&P \u22123.7%) \u00b7 "
+         "Kryvyi Rih strike \u00b7 Virginia measles \u00b7 Denmark attach\u00e9 \u00b7 "
+         "GTA VI sales \u00b7 Manipur toll first reported.  Thu 19 Nov: ICJ finds Myanmar committed genocide \u00b7 "
+         "Trump, Xi and Putin meet in Shenzhen.  Not yet: COP31\u2019s closing session (Sun 22 Nov).",
          F(SANS, 10), x1 - x0 - 96, leading=12, max_lines=2)
     d.text((x0, 1008),
            "Every story here happened or was first reported on Saturday 21 November 2026 (UTC), as the named "

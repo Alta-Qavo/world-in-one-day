@@ -7,18 +7,19 @@
 A one-page newspaper front page summing up world news on **Saturday
 21 November 2026**: 41 stories, 9 regions, 14 fields, every one dated
 that Saturday. Lead: Iran strikes Bahrain as tankers are hit in Hormuz.
-Also: Mexico seizes "El Chapo Isidro", COP31 runs into overtime, the AI
-stock sell-off, Kryvyi Rih, BepiColombo reaches Mercury, and a Wolbachia
-dengue trial in Brazil.
+Also: Mexico seizes "El Chapo Isidro", COP31 runs into overtime, BTS
+take five MAMA awards, a Nigeria boat capsize, a deep Peru quake,
+BepiColombo reaches Mercury, and a Wolbachia dengue trial in Brazil.
 
 ## How it was made
 
 `gen.py` draws the whole page from scratch with Pillow: masthead,
-timeline, numbers strip, three illustrated lead stories, eight
-illustrated medium stories, a world map with numbered pins, 30 more
+timeline, numbers strip, three illustrated lead stories, ten
+illustrated medium stories, a world map with numbered pins, 28 more
 briefs, and a date-check footer that names the well-known stories left
-out because they belong to another day (ICJ genocide ruling, 19 Nov;
-Trump–Xi–Putin, 19 Nov; missiles in Poland, 20 Nov). No photos, no
+out because they belong to another day (AI sell-off, Kryvyi Rih strike,
+Virginia measles, Denmark attaché, GTA VI sales, Manipur toll first
+reported — all 20 Nov; ICJ genocide ruling, Trump–Xi–Putin — 19 Nov). No photos, no
 downloads, no network. Every story was checked against news reported
 on 21 November 2026 (UTC); the footer grades each story's sourcing
 (CONFIRMED 2+ outlets / OFFICIAL on the record / REPORTED one outlet).
