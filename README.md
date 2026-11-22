@@ -5,7 +5,7 @@
 [![reward](https://make.fun/badge/news-image-20261121/Alta-Qavo/world-in-one-day/reward.svg)](https://make.fun/bounty/news-image-20261121?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261121)
 
 A one-page newspaper front page summing up world news on **Saturday
-21 November 2026**: 37 stories, 7 regions, 13 fields, every one dated
+21 November 2026**: 41 stories, 9 regions, 14 fields, every one dated
 that Saturday. Lead: Iran strikes Bahrain as tankers are hit in Hormuz.
 Also: Mexico seizes "El Chapo Isidro", COP31 runs into overtime, the AI
 stock sell-off, Kryvyi Rih, BepiColombo reaches Mercury, and a Wolbachia
@@ -15,7 +15,7 @@ dengue trial in Brazil.
 
 `gen.py` draws the whole page from scratch with Pillow: masthead,
 timeline, numbers strip, three illustrated lead stories, eight
-illustrated medium stories, a world map with numbered pins, 26 more
+illustrated medium stories, a world map with numbered pins, 30 more
 briefs, and a date-check footer that names the well-known stories left
 out because they belong to another day (ICJ genocide ruling, 19 Nov;
 Trump–Xi–Putin, 19 Nov; missiles in Poland, 20 Nov). No photos, no

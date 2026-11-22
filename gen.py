@@ -343,7 +343,7 @@ MEDIUM = [
          head="Russian missile hits Zelensky\u2019s hometown",
          body="2 killed, incl. a boy, 7; about 60 hurt.",
          src="AP \u00b7 BBC", ill="blast"),
-    dict(n=5, region="AMERICAS", color=GREEN, status="CONFIRMED",
+    dict(n=5, region="NORTH AMERICA", color=GREEN, status="CONFIRMED",
          head="AI sell-off drags US stocks into correction",
          body="S&P \u22123.7% Fri; Nasdaq erases 2026 gains.",
          src="BLOOMBERG \u00b7 REUTERS", ill="chart"),
@@ -351,7 +351,7 @@ MEDIUM = [
          head="Drones set Russian cargo ship ablaze",
          body="Drifts into Finnish waters; crew safe.",
          src="BBC \u00b7 UPI", ill="ship"),
-    dict(n=7, region="AMERICAS", color=GREEN, status="REPORTED",
+    dict(n=7, region="LATIN AMERICA", color=TEAL, status="REPORTED",
          head="Trial: mosquitoes cut dengue 69%",
          body="5,757 children in Belo Horizonte trial.",
          src="AP \u00b7 STRAITS TIMES", ill="mosquito"),
@@ -400,6 +400,10 @@ BRIEFS = [
     ("Hormuz", "Lewis Pugh completes 15km swim", "EURONEWS"),
     ("Brussels", "EU proposes smaller budget, Big Tech tax", "RFI"),
     ("Doha", "Gulf economies hit by Iran war", "LA NACI\u00d3N"),
+    ("Antarctica", "Ancient ranges found under ice", "EURONEWS"),
+    ("Ethiopia", "700,000 displaced in the south", "FRANCE 24"),
+    ("New York", "Mamdani plans to close Rikers by 2032", "BBC"),
+    ("Cardiff", "Australia beat Wales 29\u201326", "BBC"),
 ]
 
 ILL = {"gulf": ill_gulf, "mexico": ill_mexico, "cop31": ill_cop31,
@@ -426,7 +430,7 @@ def draw():
     d.text((906, 58), "21 NOV", font=F(SANS_B, 15), fill=(255, 255, 255))
     rule(d, x0, 98, x1 - x0, width=1)
     # ---- subline (measured, centred, no overlap)
-    p1 = "37 STORIES \u00b7 7 REGIONS \u00b7 13 FIELDS \u2014 EVERY ONE DATED "
+    p1 = "41 STORIES \u00b7 9 REGIONS \u00b7 14 FIELDS \u2014 EVERY ONE DATED "
     p2 = "SATURDAY 21 NOVEMBER 2026"
     fsub = F(SANS_B, 12)
     tw = d.textlength(p1, font=fsub) + d.textlength(p2, font=fsub)
@@ -461,8 +465,9 @@ def draw():
         d.text((bx + 6, 175), big, font=F(SERIF_B, 18), fill=RED)
         para(d, bx + 6, 196, lab, F(SANS, 9), nw - 12, leading=10, max_lines=2)
     # ---- region tabs
-    tabs = [("EUROPE", 10, BLUE), ("MIDDLE EAST", 6, RED), ("AMERICAS", 11, GREEN),
-            ("AFRICA", 3, ORANGE), ("ASIA", 3, PURPLE), ("OCEANIA", 1, TEAL),
+    tabs = [("NORTH AMERICA", 9, GREEN), ("LATIN AMERICA", 3, TEAL),
+            ("EUROPE", 11, BLUE), ("MIDDLE EAST", 6, RED), ("AFRICA", 4, ORANGE),
+            ("ASIA", 3, PURPLE), ("OCEANIA", 1, TEAL), ("ANTARCTICA", 1, GREY),
             ("GLOBAL", 3, GREY)]
     tx = x0
     d.text((tx, 221), "STORIES BY REGION", font=F(SANS_B, 10), fill=INK)
@@ -514,15 +519,15 @@ def draw():
     d.text((x0, by + 208), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
            font=F(SANS, 8), fill=GREY)
     bx = 354
-    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 26 MORE STORIES",
+    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 30 MORE STORIES",
            font=F(SANS_B, 12), fill=INK)
     d.text((bx, by + 15), "in order of consequence", font=F(SANS, 9), fill=GREY)
     colw = 326
     for i, (place, head, src) in enumerate(BRIEFS):
-        c = i // 13
-        r = i % 13
+        c = i // 15
+        r = i % 15
         x = bx + c * (colw + 10)
-        y = by + 30 + r * 18
+        y = by + 30 + r * 15
         d.text((x, y), "%d" % (12 + i), font=F(SANS_B, 11), fill=RED)
         para(d, x + 22, y, "%s: %s  (%s)" % (place, head, src),
              F(SANS, 10), colw - 22, leading=11, max_lines=2)
