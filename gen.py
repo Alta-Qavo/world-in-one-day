@@ -121,9 +121,10 @@ AU = [(115, -20), (125, -15), (135, -12), (142, -10), (150, -20),
       (150, -35), (140, -38), (130, -32), (120, -35), (113, -25)]
 CONTINENTS = [NA, SA, AF, EU, AS, AU]
 
-PINS = [(50.5, 26.2), (-108.5, 25.6), (30.7, 36.9), (33.4, 47.9),
-        (-74.0, 40.7), (24.5, 59.8), (-43.9, -19.9), (127.4, -7.7),
-        (4.35, 50.85), (6.14, 46.2)]
+PINS = [(50.5, 26.2, 0, 0), (-108.5, 25.6, 0, 0), (30.7, 36.9, 0, 12),
+        (33.4, 47.9, 12, -2), (-74.0, 40.7, 0, 0), (24.5, 59.8, 0, 0),
+        (-43.9, -19.9, 0, 0), (127.4, -7.7, 0, 0), (4.35, 50.85, -16, -2),
+        (6.14, 46.2, 2, 14)]
 
 
 def world_map(d, x, y, w, h, pins=True):
@@ -134,18 +135,10 @@ def world_map(d, x, y, w, h, pins=True):
     d.text((x + 6, y + 4), "ATLANTIC", font=F(SANS, 8), fill=(90, 120, 140))
     d.text((x + w - 52, y + h - 14), "PACIFIC", font=F(SANS, 8), fill=(90, 120, 140))
     if pins:
-        drawn = []
-        for i, (lon, lat) in enumerate(PINS, 1):
-            px, py = project(x, y, w, h, lon, lat)
-            for _ in range(2):
-                if any((px - qx) ** 2 + (py - qy) ** 2 < 14 ** 2 for qx, qy in drawn):
-                    px += 10
-                    py -= 6
-                else:
-                    break
-            drawn.append((px, py))
+        for i, (lon, lat, dx, dy) in enumerate(PINS, 1):
             ox, oy = project(x, y, w, h, lon, lat)
-            if (px, py) != (ox, oy):
+            px, py = ox + dx, oy + dy
+            if (dx, dy) != (0, 0):
                 d.line([(ox, oy), (px, py)], fill=RED, width=1)
             d.ellipse([px - 7, py - 7, px + 7, py + 7], fill=RED,
                       outline=(255, 255, 255), width=1)
@@ -330,9 +323,8 @@ def ill_robot(d, x, y, w, h):
 LEADS = [
     dict(region="MIDDLE EAST", color=RED, status="CONFIRMED",
          head="Iran strikes Bahrain as tankers hit in Hormuz",
-         body=("Bahrain says an Iranian attack set a civilian industrial site "
-               "ablaze; no one hurt. The IRGC says it hit US positions at "
-               "al-Riffa and Awali."),
+         body=("Bahrain: Iranian attack set an industrial site ablaze; no one "
+               "hurt. IRGC says it hit US sites at al-Riffa and Awali."),
          src="AL JAZEERA \u00b7 REUTERS \u00b7 AFP", ill="gulf"),
     dict(region="MEXICO \u00b7 SINALOA", color=GREEN, status="CONFIRMED",
          head="Mexico seizes \u2018El Chapo Isidro\u2019; 11 die",
@@ -375,7 +367,7 @@ MEDIUM = [
          head="EU and Indonesia sign trade pact",
          body="98.5% of EU tariffs gone; 730m people.",
          src="DW \u00b7 EURONEWS", ill="trade"),
-    dict(n=11, region="GLOBAL", color=GREY, status="CONFIRMED",
+    dict(n=11, region="EUROPE", color=BLUE, status="CONFIRMED",
          head="UN \u2018killer robot\u2019 talks end, no treaty",
          body="~100 states back rules by 2028; US opposed.",
          src="CBC \u00b7 NPR", ill="robot"),
@@ -383,25 +375,25 @@ MEDIUM = [
 
 BRIEFS = [
     ("Gaza", "Israeli strike kills 3 in food vehicle", "REUTERS"),
-    ("Riyadh", "Coalition says it downed 3 Houthi missiles", "AL JAZEERA"),
-    ("Paris", "6th Saturday of cost-of-living marches; 144 held", "FRANCE 24"),
+    ("Riyadh", "3 Houthi missiles downed", "AL JAZEERA"),
+    ("Paris", "6th Saturday of cost-of-living marches", "FRANCE 24"),
     ("Copenhagen", "Denmark expels Russian attach\u00e9 over alleged plot", "BBC"),
-    ("Brussels", "UK and EU sign three post-Brexit deals", "GUARDIAN"),
+    ("Brussels", "UK-EU sign three post-Brexit deals", "GUARDIAN"),
     ("Washington", "Trump threatens tax on firms building data centres abroad", "BBC"),
     ("Washington", "FBI crime database reportedly hacked", "BBC"),
-    ("Virginia", "First US measles death of 2026, a child", "GUARDIAN"),
-    ("Bras\u00edlia", "Bolsonaro in intensive care, bowel obstruction", "AL JAZEERA"),
-    ("Bayelsa", "Funeral boat capsizes in Nigeria; 24 dead", "SKY NEWS"),
+    ("Virginia", "First US measles death of 2026", "GUARDIAN"),
+    ("Bras\u00edlia", "Bolsonaro in intensive care", "AL JAZEERA"),
+    ("Bayelsa", "Funeral boat capsizes; 24 dead", "SKY NEWS"),
     ("Basra", "Fire at power station kills 4, injures 35", "REUTERS"),
-    ("Dar es Salaam", "Tanzania convicts opposition leader Lissu", "BBC"),
-    ("Kampala", "Uganda restricts gatherings over Ebola", "GUARDIAN"),
-    ("Port-au-Prince", "Salvadoran troops fight gangs; 3 soldiers die", "GUARDIAN"),
-    ("Tokyo", "Saudi Arabia, Japan agree oil stockpile deal", "JAPAN TODAY"),
-    ("Buenos Aires", "Argentina bonds fall into distress", "BUENOS AIRES TIMES"),
+    ("Dar es Salaam", "Tanzania convicts Lissu", "BBC"),
+    ("Kampala", "Uganda curbs gatherings over Ebola", "GUARDIAN"),
+    ("Haiti", "Salvadoran troops fight gangs", "GUARDIAN"),
+    ("Tokyo", "Saudi-Japan oil stockpile deal", "JAPAN TODAY"),
+    ("Buenos Aires", "Bonds in distress", "BUENOS AIRES TIMES"),
     ("New York", "GTA VI earns $3.8bn on its first day", "BBC"),
     ("London", "England beat All Blacks 37\u201312 at Twickenham", "BBC"),
     ("Osaka", "BTS take five MAMA awards", "YONHAP"),
-    ("Cardiff", "Australia beat Wales 29\u201326", "BBC"),
+    ("Melbourne", "North Melbourne reach 4th AFLW final", "ABC"),
 ]
 
 ILL = {"gulf": ill_gulf, "mexico": ill_mexico, "cop31": ill_cop31,
@@ -417,7 +409,7 @@ def draw():
     # ---- top bar
     d.text((x0, 8), "THE WORLD IN ONE DAY", font=F(SANS_B, 11), fill=INK)
     d.text((x0 + 400, 8), "DAY 325 OF 2026", font=F(SANS_B, 11), fill=RED)
-    d.text((x1 - 258, 8), "ALL TIMES UTC \u00b7 RANKED BY CONSEQUENCE",
+    d.text((x1 - 258, 8), "ALL TIMES UTC \u00b7 ONE DAY IN FULL",
            font=F(SANS_B, 11), fill=INK)
     rule(d, x0, 28, x1 - x0, width=2)
     # ---- masthead
@@ -444,7 +436,7 @@ def draw():
     # ---- timeline strip (auto-fit to the strip)
     d.rectangle([x0, 146, 128, 164], fill=INK)
     d.text((x0 + 6, 149), "THE DAY IN UTC", font=F(SANS_B, 10), fill=(255, 255, 255))
-    tl = ("00:09 M6.7 Peru   |   06:50 Sparta II alarm   |   09:42 M6.8 Banda Sea   |   "
+    tl = ("00:09 M6.7 Peru   |   MORNING Sparta II alarm, Gulf of Finland   |   09:42 M6.8 Banda Sea   |   "
           "MIDDAY EU\u2013Indonesia pact   |   18:24 BepiColombo orbit   |   "
           "NIGHT Iran strikes Bahrain \u00b7 COP31 talks go on")
     ftl = fit(SANS, tl, x1 - 134, 10)
@@ -463,9 +455,9 @@ def draw():
         d.text((bx + 6, 175), big, font=F(SERIF_B, 18), fill=RED)
         para(d, bx + 6, 196, lab, F(SANS, 9), nw - 12, leading=10, max_lines=2)
     # ---- region tabs
-    tabs = [("EUROPE", 7, BLUE), ("MIDDLE EAST", 4, RED), ("AMERICAS", 10, GREEN),
+    tabs = [("EUROPE", 8, BLUE), ("MIDDLE EAST", 4, RED), ("AMERICAS", 10, GREEN),
             ("AFRICA", 3, ORANGE), ("ASIA", 3, PURPLE), ("OCEANIA", 1, TEAL),
-            ("GLOBAL", 3, GREY)]
+            ("GLOBAL", 2, GREY)]
     tx = x0
     d.text((tx, 221), "STORIES BY REGION", font=F(SANS_B, 10), fill=INK)
     tx += 132
