@@ -377,9 +377,9 @@ BRIEFS = [
     ("Gaza", "Israeli strike kills 3 in food vehicle", "REUTERS"),
     ("Riyadh", "3 Houthi missiles downed", "AL JAZEERA"),
     ("Paris", "6th Saturday of cost-of-living marches", "FRANCE 24"),
-    ("Copenhagen", "Denmark expels Russian attach\u00e9 over alleged plot", "BBC"),
+    ("Copenhagen", "Denmark expels Russian attach\u00e9", "BBC"),
     ("Brussels", "UK-EU sign three post-Brexit deals", "GUARDIAN"),
-    ("Washington", "Trump threatens tax on firms building data centres abroad", "BBC"),
+    ("Washington", "Trump threatens data-centre tax", "BBC"),
     ("Washington", "FBI crime database reportedly hacked", "BBC"),
     ("Virginia", "First US measles death of 2026", "GUARDIAN"),
     ("Bras\u00edlia", "Bolsonaro in intensive care", "AL JAZEERA"),
@@ -394,6 +394,12 @@ BRIEFS = [
     ("London", "England beat All Blacks 37\u201312 at Twickenham", "BBC"),
     ("Osaka", "BTS take five MAMA awards", "YONHAP"),
     ("Melbourne", "North Melbourne reach 4th AFLW final", "ABC"),
+    ("Washington", "Nvidia chief ousted after scandal", "CNBC"),
+    ("London", "Princess Kate says she is in remission", "CBS"),
+    ("Space", "Voyager 1 now 24 light-hours from Earth", "NASA"),
+    ("Hormuz", "Lewis Pugh completes 15km swim", "EURONEWS"),
+    ("Brussels", "EU proposes smaller budget, Big Tech tax", "RFI"),
+    ("Doha", "Gulf economies hit by Iran war", "LA NACI\u00d3N"),
 ]
 
 ILL = {"gulf": ill_gulf, "mexico": ill_mexico, "cop31": ill_cop31,
@@ -420,7 +426,7 @@ def draw():
     d.text((906, 58), "21 NOV", font=F(SANS_B, 15), fill=(255, 255, 255))
     rule(d, x0, 98, x1 - x0, width=1)
     # ---- subline (measured, centred, no overlap)
-    p1 = "31 STORIES \u00b7 7 REGIONS \u00b7 12 FIELDS \u2014 EVERY ONE DATED "
+    p1 = "37 STORIES \u00b7 7 REGIONS \u00b7 13 FIELDS \u2014 EVERY ONE DATED "
     p2 = "SATURDAY 21 NOVEMBER 2026"
     fsub = F(SANS_B, 12)
     tw = d.textlength(p1, font=fsub) + d.textlength(p2, font=fsub)
@@ -455,9 +461,9 @@ def draw():
         d.text((bx + 6, 175), big, font=F(SERIF_B, 18), fill=RED)
         para(d, bx + 6, 196, lab, F(SANS, 9), nw - 12, leading=10, max_lines=2)
     # ---- region tabs
-    tabs = [("EUROPE", 8, BLUE), ("MIDDLE EAST", 4, RED), ("AMERICAS", 10, GREEN),
+    tabs = [("EUROPE", 10, BLUE), ("MIDDLE EAST", 6, RED), ("AMERICAS", 11, GREEN),
             ("AFRICA", 3, ORANGE), ("ASIA", 3, PURPLE), ("OCEANIA", 1, TEAL),
-            ("GLOBAL", 2, GREY)]
+            ("GLOBAL", 3, GREY)]
     tx = x0
     d.text((tx, 221), "STORIES BY REGION", font=F(SANS_B, 10), fill=INK)
     tx += 132
@@ -500,23 +506,23 @@ def draw():
     d.text((x0, by), "WHERE IT HAPPENED", font=F(SANS_B, 12), fill=INK)
     d.text((x0, by + 15), "pins 1\u201310 are the drawn stories",
            font=F(SANS, 9), fill=GREY)
-    world_map(d, x0, by + 30, 330, 190)
-    d.text((x0, by + 226), "1 Bahrain  2 Mexico  3 Antalya  4 Kryvyi Rih  5 New York",
+    world_map(d, x0, by + 30, 330, 150)
+    d.text((x0, by + 186), "1 Bahrain  2 Mexico  3 Antalya  4 Kryvyi Rih  5 New York",
            font=F(SANS, 9), fill=INK)
-    d.text((x0, by + 237), "6 Gulf of Finland  7 Belo Horizonte  8 Banda Sea  9 Brussels  10 Geneva",
+    d.text((x0, by + 197), "6 Gulf of Finland  7 Belo Horizonte  8 Banda Sea  9 Brussels  10 Geneva",
            font=F(SANS, 9), fill=INK)
-    d.text((x0, by + 248), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
+    d.text((x0, by + 208), "HOW SURE: CONFIRMED 2+ outlets \u00b7 OFFICIAL on the record \u00b7 REPORTED one outlet",
            font=F(SANS, 8), fill=GREY)
     bx = 354
-    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 20 MORE STORIES",
+    d.text((bx, by), "ALSO ON SATURDAY 21 NOVEMBER 2026 \u2014 26 MORE STORIES",
            font=F(SANS_B, 12), fill=INK)
     d.text((bx, by + 15), "in order of consequence", font=F(SANS, 9), fill=GREY)
     colw = 326
     for i, (place, head, src) in enumerate(BRIEFS):
-        c = i // 10
-        r = i % 10
+        c = i // 13
+        r = i % 13
         x = bx + c * (colw + 10)
-        y = by + 30 + r * 23
+        y = by + 30 + r * 18
         d.text((x, y), "%d" % (12 + i), font=F(SANS_B, 11), fill=RED)
         para(d, x + 22, y, "%s: %s  (%s)" % (place, head, src),
              F(SANS, 10), colw - 22, leading=11, max_lines=2)
