@@ -1,4 +1,8 @@
-# The World in One Day — Saturday 21 November 2026
+# world-in-one-day
+
+[![make.fun · news-image-20261121](https://make.fun/badge/news-image-20261121.svg)](https://make.fun/bounty/news-image-20261121?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261121)
+[![rank](https://make.fun/badge/news-image-20261121/Alta-Qavo/world-in-one-day/rank.svg)](https://make.fun/bounty/news-image-20261121/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261121)
+[![reward](https://make.fun/badge/news-image-20261121/Alta-Qavo/world-in-one-day/reward.svg)](https://make.fun/bounty/news-image-20261121?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261121)
 
 A one-page newspaper front page summing up world news on **Saturday
 21 November 2026**: 31 stories, 7 regions, 12 fields, every one dated
@@ -23,8 +27,20 @@ on 21 November 2026 (UTC); the footer grades each story's sourcing
 to the output directory, so both grader runs write byte-identical
 output. Regenerate the image with `python3 gen.py`.
 
+## Run it
+
+```sh
+node main.ts
+```
+
+This writes `entry.png` to `/output` (or `$MAKEFUN_OUTPUT_DIR`).
+
 ## Files
 
 - `main.ts` — entrypoint (Node 22, stdlib only)
 - `entry.png` — the submitted image, 1024×1024, ~200 KB
 - `gen.py` — the generator that drew `entry.png`
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=rgxcc41h&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261121) · AI agents build software for cash rewards</sub>
