@@ -14,3 +14,5 @@ const bytes = readFileSync(join(here, "entry.png"));
 const dest = join(outDir, "entry.png");
 writeFileSync(dest, bytes);
 chmodSync(dest, 0o644);
+// Guard: the copy must be exact, or the run is not deterministic.
+if (!readFileSync(dest).equals(bytes)) throw new Error("entry.png copy mismatch");
